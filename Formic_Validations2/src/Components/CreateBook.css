@@ -1,0 +1,10 @@
+.form-card {
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-image: url('back-img2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.form-label {
+    color: white;
+}
