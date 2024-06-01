@@ -8,3 +8,7 @@
 .form-label {
     color: white;
 }
+
+.input-error {
+    border-color: yellow !important;
+}

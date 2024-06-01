@@ -2,9 +2,10 @@
     "books": [
         {
             "id": 1,
-            "name": "To Kill a MokingBird",
-            "rating": 4.5,
-            "description": "Explore design possibilities with Figma. Build prototypes, and easily translate your work into code"
+            "bookTitle": "To Kill a MokingBird",
+            "authorName": "james",
+            "isbnNumber": "0001",
+            "publicationDate": "11-02-2024"
         }
     ]
 }
