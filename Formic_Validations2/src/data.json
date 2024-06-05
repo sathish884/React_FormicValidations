@@ -2,10 +2,35 @@
     "books": [
         {
             "id": 1,
-            "bookTitle": "To Kill a MokingBird",
-            "authorName": "james",
-            "isbnNumber": "0001",
-            "publicationDate": "11-02-2024"
+            "bookTitle": "Book one",
+            "authorName": "James Fransco",
+            "isbnNumber": "0001123",
+            "publicationDate": "2024-11-22",
+            "rating": 4,
+            "image": "https://m.media-amazon.com/images/I/51uFGDj6SQL.jpg"
+        },
+        {
+            "id": 2,
+            "bookTitle": "Book two",
+            "authorName": "William Smith",
+            "isbnNumber": "000234",
+            "publicationDate": "2023-02-07",
+            "rating": 4.5,
+            "image": "https://miblart.com/wp-content/uploads/2023/04/9781529355413-667x1024.jpg"
+        }
+    ],
+    "authorData": [
+        {
+            "id": 1,
+            "authorName": "James williamson",
+            "birthDate": "1995-11-22",
+            "bioGraphy": "Lorem ipsum dolor earum at commodi doloribus magnam cupiditate"
+        },
+        {
+            "id": 2,
+            "authorName": "Kenny raw",
+            "birthDate": "1990-07-02",
+            "bioGraphy": "Lorem ipsum dolor earum at commodi doloribus magnam cupiditate"
         }
     ]
 }

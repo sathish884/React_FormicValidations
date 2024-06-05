@@ -2,6 +2,7 @@ import React from 'react';
 import './Dashboard.css';
 import { Rate } from 'antd';
 import { Link, BrowserRouter as Router } from 'react-router-dom';
+import CreateBook from './CreateBook';
 
 
 function Dashboard() {
@@ -14,8 +15,8 @@ function Dashboard() {
                         <div style={{ padding: "20px 0px" }}>
                             <ul className="list-group list-group-flush">
                                 <li className="list-group-item ps-3"><i className="bi bi-house-fill"></i>&nbsp;&nbsp;Dashboard</li>
-                                <li className="list-group-item ps-3"><i className="bi bi-book-fill"></i>&nbsp;&nbsp;Books</li>
-                                <li className="list-group-item ps-3"><i className="bi bi-people-fill"></i>&nbsp;&nbsp;Author</li>
+                                <li className="list-group-item ps-3"><Link to={'/list-books'} style={{ textDecoration: "none", fontSize: "20px" }}><i className="bi bi-book-fill"></i>&nbsp;&nbsp;Books</Link></li>
+                                <li className="list-group-item ps-3"><Link to={'/list-author'} style={{ textDecoration: "none", fontSize: "20px" }}><i className="bi bi-book-fill"></i>&nbsp;&nbsp;Author</Link> </li>
                             </ul>
                         </div>
 
@@ -38,10 +39,12 @@ function Dashboard() {
                                 <h2 className="card-title">Upload Your book to increse your sales</h2>
                                 <p className="card-text">Engage your shop book with this dashboard and make sales everyday to your shop</p>
 
-                                <button className='btn' style={{ backgroundColor: "#2E3744", color: "white" }}>
-                                    <Link to={'/create-books'} style={{ backgroundColor: "#2E3744", color: "white", textDecoration: "none" }}>+Add New Book</Link>
-                                </button>
-
+                                <Link type="button"
+                                    className="btn"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#createmodel" style={{ backgroundColor: "#2E3744", color: "white", display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
+                                    +Add New Book
+                                </Link>
 
                             </div>
                             <div>
@@ -77,8 +80,9 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
-                {/* className='rounded img-fluid img-thumbnail' */}
             </div>
+
+            <CreateBook />
         </>
     )
 }
