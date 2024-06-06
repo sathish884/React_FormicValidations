@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import './Dashboard.css';
 import { Rate } from 'antd';
 import { Link, BrowserRouter as Router } from 'react-router-dom';
-import CreateBook from './CreateBook';
+import BookData from '../data.json';
+import { BookContext } from '../App';
 
+function Dashboard({ counts }) {
 
-function Dashboard() {
+    const { bookList, setBookList } = useContext(BookContext)
+    const { authorList, setAuthorToEdit } = useContext(BookContext)
+
     return (
         <>
             <div className="container-fluid">
@@ -14,9 +18,9 @@ function Dashboard() {
 
                         <div style={{ padding: "20px 0px" }}>
                             <ul className="list-group list-group-flush">
-                                <li className="list-group-item ps-3"><i className="bi bi-house-fill"></i>&nbsp;&nbsp;Dashboard</li>
-                                <li className="list-group-item ps-3"><Link to={'/list-books'} style={{ textDecoration: "none", fontSize: "20px" }}><i className="bi bi-book-fill"></i>&nbsp;&nbsp;Books</Link></li>
-                                <li className="list-group-item ps-3"><Link to={'/list-author'} style={{ textDecoration: "none", fontSize: "20px" }}><i className="bi bi-book-fill"></i>&nbsp;&nbsp;Author</Link> </li>
+                                <li className="list-group-item ps-3 side-menu-item"><i className="bi bi-house-fill"></i>&nbsp;&nbsp;Dashboard</li>
+                                <li className="list-group-item ps-3"><Link to={'/list-books'} className='side-menu-item'><i className="bi bi-book-fill"></i>&nbsp;&nbsp;Books</Link></li>
+                                <li className="list-group-item ps-3"><Link to={'/list-author'} className='side-menu-item'><i className="bi bi-person-fill"></i>&nbsp;&nbsp;Author</Link> </li>
                             </ul>
                         </div>
 
@@ -32,7 +36,7 @@ function Dashboard() {
                         </div>
                     </div>
 
-                    <div className="col-7 pt-5" style={{ backgroundColor: "#F9F9F9" }}>
+                    <div className="col-7 py-5" style={{ backgroundColor: "#F9F9F9" }}>
 
                         <div className="card d-flex flex-row px-5 py-3 center-card" style={{ backgroundColor: "#EDEDEB" }}>
                             <div className='pt-5'>
@@ -54,22 +58,26 @@ function Dashboard() {
 
                         <div className='p-3 d-flex justify-content-between'>
                             <h5>Popular Now &nbsp; <i className="bi bi-fire" style={{ color: "orange" }}></i></h5>
-                            <Link to={'/list-books'}>See more...</Link>
+                            <Link to={'/list-books'} style={{ fontSize: "20px" }}>See more...</Link>
                         </div>
 
-                        <div>
-                            <div className="card book-card" style={{ width: "14rem" }}>
-                                <div className="card-header" style={{ backgroundColor: "#A54814" }}>
-                                    <img src="card-img5.jpg" className="card-img-top img-thumbnail" alt="..." />
+                        <div className='count-card'>
+                            <Link to={'/list-books'} className='dashboard-counts'>
+                                <div className="card book-card" style={{ width: "14rem" }}>
+                                    <div className="card-body text-center">
+                                        <h4>Books Count</h4>
+                                        <h5 className="card-title">{bookList.length}</h5>
+                                    </div>
                                 </div>
-
-                                <div className="card-body">
-                                    <h5 className="card-title">Card title</h5>
-                                    <p className="card-text">Some quick example text to build on the card title.</p>
-                                    <Rate allowHalf defaultValue={2.5} />
-
+                            </Link>
+                            <Link to={'/list-author'} className='dashboard-counts'>
+                                <div className="card author-card" style={{ width: "14rem" }}>
+                                    <div className="card-body text-center">
+                                        <h4>Author Count</h4>
+                                        <h5 className="card-title">{authorList.length}</h5>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </div>
 
                     </div>
@@ -81,8 +89,6 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
-
-            <CreateBook />
         </>
     )
 }

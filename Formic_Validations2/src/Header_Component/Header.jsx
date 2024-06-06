@@ -1,13 +1,14 @@
 import React from 'react'
-import Dashboard from './Dashboard'
+import './Header.css';
 
 function Header() {
+
     return (
         <>
 
             <nav className="navbar" style={{ backgroundColor: "lightgray" }}>
                 <div className="container-fluid">
-                    <a className="navbar-brand" href="#">Navbar</a>
+                    <a className="navbar-brand" href="#"><img src="navbar-logo.png" alt="" width={230} height={50} /></a>
                 </div>
             </nav>
 

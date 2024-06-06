@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 
 function CreateBook({ createBook, model }) {
 
+    // Initial values for the form fields
     const initialValues = {
         bookTitle: '',
         authorName: '',
@@ -15,6 +16,7 @@ function CreateBook({ createBook, model }) {
         image: null
     };
 
+    // Validation schema using Yup for form validation
     const validationSchema = Yup.object({
         bookTitle: Yup.string()
             .required('Name is required')
@@ -36,11 +38,14 @@ function CreateBook({ createBook, model }) {
         image: Yup.mixed().required('An image is required'),
     });
 
+    // Function to handle form submission
     const onSubmit = (values, { resetForm }) => {
+        // Call the function to create a new book with form values
         createBook(values);
-        console.log(values);
+        // Reset the form fields
         resetForm();
-        document.getElementById("createCloseModalButton").click(); // Close the modal programmatically
+        // Close the modal programmatically by clicking the close button
+        document.getElementById("createCloseModalButton").click();
     };
 
     return (

@@ -6,13 +6,15 @@ import * as Yup from 'yup';
 
 function EditBook({ editBook, bookToEdit }) {
 
+    // Initial values for the form fields, populated with the current book's data if available
     const initialValues = {
-        bookTitle: bookToEdit?.bookTitle || '',
+        bookTitle: bookToEdit?.bookTitle || '', // If bookToEdit exists, use its bookTitle, otherwise use an empty string
         authorName: bookToEdit?.authorName || '',
         isbnNumber: bookToEdit?.isbnNumber || '',
         publicationDate: bookToEdit?.publicationDate || '',
     };
 
+    // Validation schema using Yup for form validation
     const validationSchema = Yup.object({
         bookTitle: Yup.string()
             .required('Book Name is required')
@@ -26,13 +28,17 @@ function EditBook({ editBook, bookToEdit }) {
             .min(10000, 'ISBN Number must be at least 5 digits'),
         publicationDate: Yup.date()
             .required('Publication Date is required')
-            .typeError('Invalid date format (DD-MM-YYYY)'),
+            .typeError('Invalid date format (YYYY-MM-DD)'),
     });
 
+    // Function to handle form submission
     const onSubmit = (values, { resetForm }) => {
+        // Call the function to edit the book with updated values
         editBook({ ...bookToEdit, ...values });
+        // Reset the form fields
         resetForm();
-        document.getElementById("editCloseModalButton").click(); // Close the modal programmatically
+        // Close the modal programmatically by clicking the close button
+        document.getElementById("editCloseModalButton").click();
     };
 
     return (

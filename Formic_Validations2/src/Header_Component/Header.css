@@ -1,0 +1,10 @@
+.navbar {
+    padding: 0px;
+    background-image: url('../../public/navbar-img4.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.navbar .container-fluid {
+    padding: 0px;
+}

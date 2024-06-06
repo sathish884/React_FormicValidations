@@ -1,42 +1,47 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, Space, Popconfirm, Rate } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import BookData from '../data.json'; // Adjust to your actual path
-import './ListAuthor.css'; // Adjust to your actual stylesheet path
+import BookData from '../data.json';
+import './ListAuthor.css';
 import { format } from 'date-fns';
 import CreateAuthor from './CreateAuthor';
 import EditAuthor from './EditAuthor';
-
+import { BookContext } from '../App';
 
 const ListAuthor = () => {
-    const [authorList, setAuthorList] = useState([]);
+
+    // Extracting authorList and setAuthorList from BookContext to manage state centrally
+    const { authorList, setAuthorList } = useContext(BookContext);
+    // const [authorList, setAuthorList] = useState([]);
     const [authorToEdit, setAuthorToEdit] = useState(null);
 
-    useEffect(() => {
-        setAuthorList(BookData.authorData)
-    }, [])
-
-    // create book
+    // Function to add a new author to the list
     const addNewAuthor = (newAuthor) => {
+        // Updating the author list by adding the new author
         setAuthorList([...authorList, newAuthor]);
     };
 
-    // Edit book
+    // Function to set the selected author for editing in a popup view
     const handleEditAuthor = (author) => {
         setAuthorToEdit(author);
     };
 
+    // Function to update the author's data
     const handleUpdateAuthor = (updatedAuthor) => {
+        // Updating the author list with the updated author information
         setAuthorList(authorList.map(author => (author.id === updatedAuthor.id ? updatedAuthor : author)));
     };
 
-    // delete book
+    // Function to delete an author from the list
     const confirm = (index) => {
+        // Creating a new list excluding the author at the specified index
         const newAuthorList = authorList.filter((_, i) => i !== index);
+        // Updating the author list
         setAuthorList(newAuthorList);
     };
 
+    // Function to handle cancel action (if any)
     const cancel = () => {
         console.log("Cancelled");
     };
@@ -63,48 +68,8 @@ const ListAuthor = () => {
                 </div>
 
                 <div className="row">
-                    {/* {bookList.map((item, index) => ( */}
-                    {/* // <div className="col-4" key={index}>
-                        //     <div className="card book-card">
-                        //         <img className='card-img-top' src={item.image} height={200} alt="" />
-                        //         <div className="card-body">
-                        //             <h5 className='card-title'>{`${item.bookTitle}`}</h5>
-                        //             <p>Lorem ipsum dolor earum at commodi doloribus magnam cupiditate?</p>
-                        //             <p><b>Publication Date: </b>{format(new Date(item.publicationDate), 'yyyy-MM-dd')}</p>
-                        //             <blockquote><span><b>Written By</b></span><br /><i>(''{item.authorName}'')</i></blockquote>
-                        //             <div className='d-flex justify-content-between'>
-                        //                 <Rate allowHalf defaultValue={item.rating} />
-                        //                 <div>
-                        //                     <Space>
-                        //                         <Link type="button"
-                        //                             className="btn btn-primary"
-                        //                             data-bs-toggle="modal"
-                        //                             data-bs-target="#editmodel" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} onClick={() => handleEditBook(item)}>
-                        //                             <EditOutlined style={{ fontSize: "20px" }} />&nbsp;
-                        //                         </Link>
-                        //                         <Popconfirm
-                        //                             title="Delete the book"
-                        //                             description="Are you sure to delete this book?"
-                        //                             onConfirm={() => confirm(index)}
-                        //                             onCancel={cancel}
-                        //                             okText="Yes"
-                        //                             cancelText="No"
-                        //                             className="custom-popconfirm"
-                        //                         >
-                        //                             <Link type="button"
-                        //                                 className="btn btn-danger"
-                        //                                 style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }}>
-                        //                                 <DeleteOutlined style={{ fontSize: "22px" }} />
-                        //                             </Link>
-                        //                         </Popconfirm>
-                        //                     </Space>
-                        //                 </div>
-                        //             </div>
-                        //         </div>
-                        //     </div>
-                        // </div> */}
                     <div className="table-responsive">
-                        <table className="table">
+                        <table className="table table-hover" style={{ boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px" }}>
                             <thead className="table-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -127,7 +92,7 @@ const ListAuthor = () => {
                                                     <Link type="button"
                                                         className="btn btn-primary"
                                                         data-bs-toggle="modal"
-                                                        data-bs-target="#editmodel" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} onClick={() => handleEditAuthor(data)}>
+                                                        data-bs-target="#authoreditmodel" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none' }} onClick={() => handleEditAuthor(data)}>
                                                         <EditOutlined style={{ fontSize: "20px" }} />&nbsp;
                                                     </Link>
                                                     <Popconfirm

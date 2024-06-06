@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, Space, Popconfirm, Rate } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
@@ -7,36 +7,41 @@ import BookData from '../data.json'; // Adjust to your actual path
 import './ListBook.css'; // Adjust to your actual stylesheet path
 import EditBook from './EditBook';
 import { format } from 'date-fns';
+import { BookContext } from '../App';
 
 
 const ListBook = () => {
-    const [bookList, setBookList] = useState([]);
+    // Extracting bookList and setBookList from BookContext to manage state centrally
+    const { bookList, setBookList } = useContext(BookContext)
+    // const [bookList, setBookList] = useState(BookData.books);
     const [bookToEdit, setBookToEdit] = useState(null);
 
-    useEffect(() => {
-        setBookList(BookData.books)
-    }, [])
-
-    // create book
+    // Function to add a new book to the list
     const addNewBook = (newBook) => {
+        // Updating the book list by adding the new book
         setBookList([...bookList, newBook]);
     };
 
-    // Edit book
+    // Function to set the selected book for editing in a popup view
     const handleEditBook = (book) => {
         setBookToEdit(book);
     };
 
+    // Function to update the book's data
     const handleUpdateBook = (updatedBook) => {
+        // Updating the book list with the updated book information
         setBookList(bookList.map(book => (book.id === updatedBook.id ? updatedBook : book)));
     };
 
-    // delete book
+    // Function to delete an book from the list
     const confirm = (index) => {
+        // Creating a new list excluding the book at the specified index
         const newBookList = bookList.filter((_, i) => i !== index);
+        // Updating the book list
         setBookList(newBookList);
     };
 
+    // Function to handle cancel action (if any)
     const cancel = () => {
         console.log("Cancelled");
     };
@@ -72,8 +77,13 @@ const ListBook = () => {
                                     <p>Lorem ipsum dolor earum at commodi doloribus magnam cupiditate?</p>
                                     <p><b>Publication Date: </b>{format(new Date(item.publicationDate), 'yyyy-MM-dd')}</p>
                                     <blockquote><span><b>Written By</b></span><br /><i>(''{item.authorName}'')</i></blockquote>
-                                    <div className='d-flex justify-content-between'>
+
+                                    <div className='d-flex justify-content-between align-items-center'>
+
+                                        <span><b>5/{item.rating}</b></span>
                                         <Rate allowHalf defaultValue={item.rating} />
+
+
                                         <div>
                                             <Space>
                                                 <Link type="button"

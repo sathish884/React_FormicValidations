@@ -3,31 +3,54 @@ import './CreateAuthor.css'
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
+// Custom validation function to check if the date is in the past
+const isPastDate = (date) => {
+    const today = new Date();
+    return new Date(date) < today;
+};
 
 function CreateAuthor({ createAuthor, model }) {
 
+    // Initial values for the form fields
     const initialValues = {
         authorName: '',
         birthDate: '',
         bioGraphy: ''
     };
 
+    // Validation schema using Yup for form validation
     const validationSchema = Yup.object({
         authorName: Yup.string()
             .required('Author Name is required')
             .min(2, 'Author Name must be at least 2 characters'),
         birthDate: Yup.date()
-            .required('Publication Date is required')
-            .typeError('Invalid date format (YYYY-MM-DD)'),
+            .required('Date of Birth is required')
+            .test('is-past-date', 'Date of Birth must be in the past', isPastDate)
+            .test(
+                'is-at-least-18',
+                'You must be at least 18 years old',
+                (value) => {
+                    const today = new Date();
+                    const birthDate = new Date(value);
+                    const age = today.getFullYear() - birthDate.getFullYear();
+                    const m = today.getMonth() - birthDate.getMonth();
+                    return m < 0 || (m === 0 && today.getDate() < birthDate.getDate())
+                        ? age - 1 >= 18
+                        : age >= 18;
+                }
+            ),
         bioGraphy: Yup.string()
             .required('Biography is required')
     });
 
+    // Function to handle form submission
     const onSubmit = (values, { resetForm }) => {
+        // Call the function to create a new author with form values
         createAuthor(values);
-        console.log(values);
+        // Reset the form fields
         resetForm();
-        document.getElementById("createCloseModalButton").click(); // Close the modal programmatically
+        // Close the modal programmatically by clicking the close button
+        document.getElementById("createCloseModalButton").click();
     };
 
     return (
